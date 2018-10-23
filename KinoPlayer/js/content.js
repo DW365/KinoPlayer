@@ -5,20 +5,17 @@ function getCode(url) {
         if (/^\d+$/.test(id) == false) {
             return null;
         }
-        var new_url = "https://cors.io/?http://moonwalk.co/moonwalk/search_as?sq=&kinopoisk_id=" + id + "&search_for=&search_year=&commit=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+        var new_url = "https://cors.io/?http://moonwalk.cc/api/videos.json?kinopoisk_id="+id+"&api_token=6eb82f15e2d7c6cbb2fdcebd05a197a2"
         var xhr = new XMLHttpRequest();
         xhr.open('GET', new_url, false);
         xhr.send();
         if (xhr.status == 200) {
-            var response_match = xhr.responseText.match(/moonwalk.pw\/(.*?)\/iframe/g)
-            if (response_match == null) {
-                return null;
-            } else {
-                var videoid = response_match.map(function(val) {
-                    return val.replace("/iframe", "")
-                })[0];
-                return videoid;
-            }
+        	var data = JSON.parse(xhr.responseText);
+        	// console.log(xhr.responseText);
+            return data[0]['token'];
+        }
+        else{
+        	return null;
         }
 }
 
